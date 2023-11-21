@@ -20,7 +20,7 @@ EOF
 
 open /System/Applications/QuickTime\ Player.app
 sleep 1
-files=("*.mov")
+files=(*)
 open "${files[0]}"
 read -p "Press enter after choosing the thumbnail frame." answer
 get_Thumb_Time
