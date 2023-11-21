@@ -171,6 +171,12 @@ if [[ -d "./09_PNGs" ]]; then
         sdpreset="#preset=tg_transparent_png_download_standard"
         jpgpreset="#preset=tg_transparent_png_preview"
         for i in *.jpg *.png; do
+            # determine filetype
+            if [[ "$i" == *".jpg"* ]]; then
+                fileType=".jpg"
+            elif [[ "$i" == *".png"* ]]; then
+                fileType=".png"
+            fi
             if [[ "$i" == *"_WIDE"* ]] && [[ "$i" == *"*.png"* ]]; then
                 mv "$i" "${i%"$fileType"}${hdpreset}$fileType"
             elif [[ "$i" == *"_STD"* ]] && [[ "$i" == *"*.png"* ]]; then
@@ -187,6 +193,12 @@ if [[ -d "./09_PNGs" ]]; then
         hdpreset="#preset=tg_transparent_png_download_wide"
         jpgpreset2="#preset=preview_only"
         for i in *.jpg *.png; do
+            # determine filetype
+            if [[ "$i" == *".jpg"* ]]; then
+                fileType=".jpg"
+            elif [[ "$i" == *".png"* ]]; then
+                fileType=".png"
+            fi
             if [[ "$i" == *"*.png"* ]]; then
                 mv "$i" "${i%"$fileType"}${hdpreset}$fileType"
             elif [[ "$i" == *"*.jpg"* ]]; then
