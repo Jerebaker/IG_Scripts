@@ -170,13 +170,15 @@ if [[ -d "./09_PNGs" ]]; then
         hdpreset="#preset=tg_transparent_png_download_wide"
         sdpreset="#preset=tg_transparent_png_download_standard"
         jpgpreset="#preset=tg_transparent_png_preview"
-        if [[ "$i" == *"_HD"* ]] && [[ "$i" == *"*.png"* ]]; then
-            mv "$i" "${i%"$fileType"}${hdpreset}$fileType"
-        elif [[ "$i" == *"_SD"* ]] && [[ "$i" == *"*.png"* ]]; then
-            mv "$i" "${i%"$fileType"}${sdpreset}$fileType"
-        elif [[ "$i" == *"*.jpg"* ]]; then
-            mv "$i" "${i%"$fileType"}${jpgpreset}$fileType"
-        fi
+        for i in *.jpg *.png; do
+            if [[ "$i" == *"_WIDE"* ]] && [[ "$i" == *"*.png"* ]]; then
+                mv "$i" "${i%"$fileType"}${hdpreset}$fileType"
+            elif [[ "$i" == *"_STD"* ]] && [[ "$i" == *"*.png"* ]]; then
+                mv "$i" "${i%"$fileType"}${sdpreset}$fileType"
+            elif [[ "$i" == *"*.jpg"* ]]; then
+                mv "$i" "${i%"$fileType"}${jpgpreset}$fileType"
+            fi
+        done
         cd ..
     fi
     if [[ -d "./PNGs" ]]; then
@@ -184,11 +186,13 @@ if [[ -d "./09_PNGs" ]]; then
         bash ${scriptPath}processFilenames "$filePrefix"
         hdpreset="#preset=tg_transparent_png_download_wide"
         jpgpreset2="#preset=preview_only"
-        if [[ "$i" == *"*.png"* ]]; then
-            mv "$i" "${i%"$fileType"}${hdpreset}$fileType"
-        elif [[ "$i" == *"*.jpg"* ]]; then
-            mv "$i" "${i%"$fileType"}${jpgpreset2}$fileType"
-        fi
+        for i in *.jpg *.png; do
+            if [[ "$i" == *"*.png"* ]]; then
+                mv "$i" "${i%"$fileType"}${hdpreset}$fileType"
+            elif [[ "$i" == *"*.jpg"* ]]; then
+                mv "$i" "${i%"$fileType"}${jpgpreset2}$fileType"
+            fi
+        done
         cd ..
     fi
 fi
