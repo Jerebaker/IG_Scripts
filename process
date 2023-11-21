@@ -16,7 +16,6 @@ if [[ -d "./02_Title" ]]; then
     for i in *; do
         if [[ -d "./$i" ]]; then
             cd "./$i"
-            bash ${scriptPath}compressFolder "_AE"
             if [[ -d "./_Images" ]]; then
                 echo "    Processing Stills for $i"
                 cd "./_Images"
@@ -26,15 +25,26 @@ if [[ -d "./02_Title" ]]; then
             fi
             if [[ -d "./_Motions" ]]; then
                 echo "    Processing Motions for $i"
+                AEcheck="fail"
+                for t in *; do
+                    if [[ "$t" == "*.aep" ]]; then
+                        AEcheck="pass"
+                    else
+                        echo "No AE file found"
+                        read -p "Press enter to continue or CTRL-C to cancel"
+                    fi
+                done
                 cd "./_Motions"
-                if [[ "$thumbs" == "y" ]]; then 
-                    bash ${scriptPath}generateThumbs "_HD" 
+                if [[ "$thumbs" == "y" ]]; then
+                    bash ${scriptPath}generateThumbs "_HD"
+                    bash ${scriptPath}generateThumbs "_SD" "_UW"
                 fi
                 bash ${scriptPath}compressMOV
                 bash ${scriptPath}processFilenames "$filePrefix"
                 bash ${scriptPath}processPresets
                 cd ..
             fi
+            bash ${scriptPath}compressFolder "_AE"
             cd ..
         fi
     done
@@ -47,7 +57,6 @@ if [[ -d "./03_Social" ]]; then
     bash ${scriptPath}renameSocials
     for i in *; do
         cd "./$i"
-        bash ${scriptPath}compressFolder "_AE"
         if [[ -d "./_Images" ]]; then
             echo "    Processing Stills for $i"
             cd "./_Images"
@@ -57,6 +66,15 @@ if [[ -d "./03_Social" ]]; then
         fi
         if [[ -d "./_Motions" ]]; then
             echo "    Processing Motions"
+            AEcheck="fail"
+            for t in *; do
+                if [[ "$t" == "*.aep" ]]; then
+                    AEcheck="pass"
+                else
+                    echo "No AE file found"
+                    read -p "Press enter to continue or CTRL-C to cancel"
+                fi
+            done
             cd "./_Motions"
             if [[ "$thumbs" == "y" ]]; then 
                 bash ${scriptPath}generateThumbs "_SQ"
@@ -66,6 +84,7 @@ if [[ -d "./03_Social" ]]; then
             bash ${scriptPath}processPresets
             cd ..
         fi
+        bash ${scriptPath}compressFolder "_AE"
         cd ..
     done
     cd ..
@@ -98,8 +117,9 @@ fi
 if [[ -d "./06_Countdown/_Motions" ]]; then
     echo "  Processing Countdowns"
     cd "./06_Countdown/_Motions"
-    if [[ "$thumbs" == "y" ]]; then 
-        bash ${scriptPath}generateThumbs "_HD" 
+    if [[ "$thumbs" == "y" ]]; then
+        bash ${scriptPath}generateThumbs "_HD"
+        bash ${scriptPath}generateThumbs "_SD" "_UW"
     fi
     bash ${scriptPath}compressMOV
     bash ${scriptPath}processFilenames "$filePrefix"
@@ -121,16 +141,56 @@ fi
 
 if [[ -d "./08_Bumper" ]]; then
     echo "  Processing Bumper"
-    cd "./08_Bumper"
-    bash ${scriptPath}compressFolder "_AE"
-    cd "./_Motions"
+    AEcheck="fail"
+    for t in *; do
+        if [[ "$t" == "*.aep" ]]; then
+            AEcheck="pass"
+        else
+            echo "No AE file found"
+            read -p "Press enter to continue or CTRL-C to cancel"
+        fi
+    done
+    cd "./08_Bumper/_Motions"
     if [[ "$thumbs" == "y" ]]; then 
-        bash ${scriptPath}generateThumbs "_HD" 
+        bash ${scriptPath}generateThumbs "_HD"
     fi
     bash ${scriptPath}compressMOV    
     bash ${scriptPath}processFilenames "$filePrefix"
     bash ${scriptPath}processPresets
-    cd ../../
+    cd ..
+    bash ${scriptPath}compressFolder "_AE"
+    cd ..
+fi
+
+if [[ -d "./09_PNGs" ]]; then
+    echo "  Processing PNGs"
+    if [[ -d "./Text PNGs" ]]; then
+        cd "./Text PNGs"
+        bash ${scriptPath}processFilenames "$filePrefix"
+        hdpreset="#preset=tg_transparent_png_download_wide"
+        sdpreset="#preset=tg_transparent_png_download_standard"
+        jpgpreset="#preset=tg_transparent_png_preview"
+        if [[ "$i" == *"_HD"* ]] && [[ "$i" == *"*.png"* ]]; then
+            mv "$i" "${i%"$fileType"}${hdpreset}$fileType"
+        elif [[ "$i" == *"_SD"* ]] && [[ "$i" == *"*.png"* ]]; then
+            mv "$i" "${i%"$fileType"}${sdpreset}$fileType"
+        elif [[ "$i" == *"*.jpg"* ]]; then
+            mv "$i" "${i%"$fileType"}${jpgpreset}$fileType"
+        fi
+        cd ..
+    fi
+    if [[ -d "./PNGs" ]]; then
+        cd "./PNGs"
+        bash ${scriptPath}processFilenames "$filePrefix"
+        hdpreset="#preset=tg_transparent_png_download_wide"
+        jpgpreset2="#preset=preview_only"
+        if [[ "$i" == *"*.png"* ]]; then
+            mv "$i" "${i%"$fileType"}${hdpreset}$fileType"
+        elif [[ "$i" == *"*.jpg"* ]]; then
+            mv "$i" "${i%"$fileType"}${jpgpreset2}$fileType"
+        fi
+        cd ..
+    fi
 fi
 
 echo

@@ -23,11 +23,11 @@
 #
 
 # pick active project, make folders in uploads, move to working directory
-    read -p "Is the project in _Working or _Uploads? " projLocation
-    if [[ "$projLocation" == "working" ]] || [[ "$projLocation" == "Working" ]]; then
+    read -p "Is the project in _Working (1) or _Uploads (2)?" projLocation
+    if [[ "$projLocation" == "working" ]] || [[ "$projLocation" == "Working" ]] || [[ "$projLocation" == "1" ]]; then
         projPath="$workingPath"
         current="working"
-    elif [[ "$projLocation" == "uploads" ]] || [[ "$projLocation" == "Uploads" ]]; then
+    elif [[ "$projLocation" == "uploads" ]] || [[ "$projLocation" == "Uploads" ]] || [[ "$projLocation" == "2" ]]; then
         projPath="$uploadsPath"
         current="uploads"
     else 

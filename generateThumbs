@@ -1,6 +1,7 @@
 #!/bin/bash
 
 textFilter="$1"
+textFilter2="$2"
 
 #quicktime madness
 get_Thumb_Time() {
@@ -19,13 +20,13 @@ EOF
 
 open /System/Applications/QuickTime\ Player.app
 sleep 1
-files=(*)
+files=("*.mov")
 open "${files[0]}"
 read -p "Press enter after choosing the thumbnail frame." answer
 get_Thumb_Time
 
 for i in *.mov; do
-    if [[ "$i" == *"$textFilter"* ]] && [[ "$i" != "*.mov" ]]; then
+    if [[ "$i" == *"$textFilter"* ]] && [[ "$i" == *"$textFilter2"* ]] && [[ "$i" != "*.mov" ]]; then
         pngthumb=${i/mov}png
         jpgthumb=${i/mov}jpg
 
