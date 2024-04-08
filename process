@@ -25,15 +25,15 @@ if [[ -d "./02_Title" ]]; then
             fi
             if [[ -d "./_Motions" ]]; then
                 echo "    Processing Motions for $i"
-                AEcheck="fail"
-                for t in *; do
-                    if [[ "$t" == "*.aep" ]]; then
-                        AEcheck="pass"
-                    else
-                        echo "No AE file found"
-                        read -p "Press enter to continue or CTRL-C to cancel"
-                    fi
-                done
+                #AEcheck="fail"
+                #for t in *; do
+                #    if [[ "$t" == "*.aep" ]]; then
+                #        AEcheck="pass"
+                #    else
+                #        echo "No AE file found"
+                #        read -p "Press enter to continue or CTRL-C to cancel"
+                #    fi
+                #done
                 cd "./_Motions"
                 if [[ "$thumbs" == "y" ]]; then
                     bash ${scriptPath}generateThumbs "_HD"
@@ -66,15 +66,6 @@ if [[ -d "./03_Social" ]]; then
         fi
         if [[ -d "./_Motions" ]]; then
             echo "    Processing Motions"
-            AEcheck="fail"
-            for t in *; do
-                if [[ "$t" == "*.aep" ]]; then
-                    AEcheck="pass"
-                else
-                    echo "No AE file found"
-                    read -p "Press enter to continue or CTRL-C to cancel"
-                fi
-            done
             cd "./_Motions"
             if [[ "$thumbs" == "y" ]]; then 
                 bash ${scriptPath}generateThumbs "_SQ"
@@ -141,15 +132,6 @@ fi
 
 if [[ -d "./08_Bumper" ]]; then
     echo "  Processing Bumper"
-    AEcheck="fail"
-    for t in *; do
-        if [[ "$t" == "*.aep" ]]; then
-            AEcheck="pass"
-        else
-            echo "No AE file found"
-            read -p "Press enter to continue or CTRL-C to cancel"
-        fi
-    done
     cd "./08_Bumper/_Motions"
     if [[ "$thumbs" == "y" ]]; then 
         bash ${scriptPath}generateThumbs "_HD"
