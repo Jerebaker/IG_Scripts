@@ -17,17 +17,14 @@ EOF
     )
 }
 
-files=(*.mov)
-if [[ "${files[0]}" == *"$textFilter"* ]] && [[ "${files[0]}" == *"$textFilter2"* ]] && [[ "${files[0]}" != "*.mov" ]]; then
-    open /System/Applications/QuickTime\ Player.app
-    sleep 1
-    open "${files[0]}"
-    read -p "Press enter after choosing the thumbnail frame." answer
-    get_Thumb_Time
-fi
+for t in *.mov; do 
+    if [[ "$t" == *"$textFilter"* ]] && [[ "$t" == *"$textFilter2"* ]] && [[ "$t" != "*.mov" ]]; then
+        open /System/Applications/QuickTime\ Player.app
+        sleep 1
+        open "$t"
+        read -p "Press enter after choosing the thumbnail frame." answer
+        get_Thumb_Time
 
-for i in *.mov; do
-    if [[ "$i" == *"$textFilter"* ]] && [[ "$i" == *"$textFilter2"* ]] && [[ "$i" != "*.mov" ]]; then
         pngthumb=${i/mov}png
         jpgthumb=${i/mov}jpg
 
