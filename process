@@ -36,7 +36,7 @@ if [[ -d "./02_Title" ]]; then
                 #done
                 cd "./_Motions"
                 if [[ "$thumbs" == "y" ]]; then
-                    bash ${scriptPath}generateThumbs "_HD" "_UW"
+                    bash ${scriptPath}generateThumbs "_HD" "" "_UW"
                     bash ${scriptPath}generateThumbs "_SD" "_UW"
                 fi
                 bash ${scriptPath}compressMOV

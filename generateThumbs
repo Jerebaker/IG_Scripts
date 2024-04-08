@@ -2,7 +2,7 @@
 
 textFilter="$1"
 textFilter2="$2"
-textFilter2="$3"
+textFilter3="$3"
 
 #quicktime madness
 get_Thumb_Time() {
