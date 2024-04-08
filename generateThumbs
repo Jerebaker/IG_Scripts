@@ -17,12 +17,14 @@ EOF
     )
 }
 
-open /System/Applications/QuickTime\ Player.app
-sleep 1
 files=(*.mov)
-open "${files[0]}"
-read -p "Press enter after choosing the thumbnail frame." answer
-get_Thumb_Time
+if [[ "${files[0]}" == *"$textFilter"* ]] && [[ "${files[0]}" == *"$textFilter2"* ]] && [[ "${files[0]}" != "*.mov" ]]; then
+    open /System/Applications/QuickTime\ Player.app
+    sleep 1
+    open "${files[0]}"
+    read -p "Press enter after choosing the thumbnail frame." answer
+    get_Thumb_Time
+fi
 
 for i in *.mov; do
     if [[ "$i" == *"$textFilter"* ]] && [[ "$i" == *"$textFilter2"* ]] && [[ "$i" != "*.mov" ]]; then
