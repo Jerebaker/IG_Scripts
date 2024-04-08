@@ -5,8 +5,8 @@
     userName=$(whoami)
     if [[ $OS == "Darwin" ]]; then
         scriptPath="/Users/$userName/Documents/Github/IG_Scripts/"
-        workingPath="/Volumes/Storage Consolidation/Active Projects/Ready-Made Media/_Working/"
-        uploadsPath="/Volumes/Storage Consolidation/Active Projects/Ready-Made Media/_Uploads/"
+        workingPath="/Volumes/Igniter/Active Projects/Ready-Made Media/_Working/"
+        uploadsPath="/Volumes/Igniter/Active Projects/Ready-Made Media/_Uploads/"
     elif [[ $OS == "Linux" ]]; then
         scriptPath="/mnt/c/Users/jere.baker/Documents/GitHub/IG_Scripts/"
         workingPath="/mnt/q/Design Primary/_PRODUCTS/_Working/"
