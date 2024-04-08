@@ -18,11 +18,11 @@ EOF
     )
 }
 
-for t in *.mov; do 
-    if [[ "$t" == *"$textFilter"* ]] && [[ "$t" == *"$textFilter2"* ]] && [[ "$t" != "*.mov" ]] && [[ "$t" != "$textFilter3" ]]; then
+for i in *.mov; do 
+    if [[ "$i" == *"$textFilter"* ]] && [[ "$i" == *"$textFilter2"* ]] && [[ "$i" != "*.mov" ]] && [[ "$i" != "$textFilter3" ]]; then
         open /System/Applications/QuickTime\ Player.app
         sleep 1
-        open "$t"
+        open "$i"
         read -p "Press enter after choosing the thumbnail frame." answer
         get_Thumb_Time
 
