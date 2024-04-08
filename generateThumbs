@@ -2,6 +2,7 @@
 
 textFilter="$1"
 textFilter2="$2"
+textFilter2="$3"
 
 #quicktime madness
 get_Thumb_Time() {
@@ -18,7 +19,7 @@ EOF
 }
 
 for t in *.mov; do 
-    if [[ "$t" == *"$textFilter"* ]] && [[ "$t" == *"$textFilter2"* ]] && [[ "$t" != "*.mov" ]]; then
+    if [[ "$t" == *"$textFilter"* ]] && [[ "$t" == *"$textFilter2"* ]] && [[ "$t" != "*.mov" ]] && [[ "$t" != "$textFilter3" ]]; then
         open /System/Applications/QuickTime\ Player.app
         sleep 1
         open "$t"

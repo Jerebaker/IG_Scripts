@@ -5,10 +5,10 @@ filePrefix="$2"
 
 echo "Processing Files for $filePrefix"
 read -p "  Do you want to re-generate thumbnails for motions? (y/n)" thumbs
-echo "  Removing Empty Folders"
-mkdir -p "./00_Assets/_emptyFolders"
-touch ./00_Assets/_emptyFolders/.hidden
-find . -type d -empty -exec mv {} ./00_Assets/_emptyFolders/ &>/dev/null \;
+#echo "  Removing Empty Folders"
+#mkdir -p "./00_Assets/_emptyFolders"
+#touch ./00_Assets/_emptyFolders/.hidden
+#find . -type d -empty -exec mv {} ./00_Assets/_emptyFolders/ &>/dev/null \;
 
 if [[ -d "./02_Title" ]]; then
     echo "  Processing Titles"
@@ -36,7 +36,7 @@ if [[ -d "./02_Title" ]]; then
                 #done
                 cd "./_Motions"
                 if [[ "$thumbs" == "y" ]]; then
-                    bash ${scriptPath}generateThumbs "_HD"
+                    bash ${scriptPath}generateThumbs "_HD" "_UW"
                     bash ${scriptPath}generateThumbs "_SD" "_UW"
                 fi
                 bash ${scriptPath}compressMOV

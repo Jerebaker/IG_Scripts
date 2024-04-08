@@ -39,17 +39,19 @@ rename () {
 
 for i in *; do
     echo "    Renaming $i Socials"
-    cd "./$i/_Images"
-    if [[ -d "./With Text" ]]; then
-        cd "./With Text"
-        rename "$i" "n"
-        cd ..
+    if [[ -d "./$i/_Images" ]]; then
+        cd "./$i/_Images"
+        if [[ -d "./With Text" ]]; then
+            cd "./With Text"
+            rename "$i" "n"
+            cd ..
+        fi
+        if [[ -d "./Without Text" ]]; then
+            cd "./Without Text"
+            rename "$i" "y"
+            cd ..
+        fi
+        find . -type d -empty -delete
+        cd ../../
     fi
-    if [[ -d "./Without Text" ]]; then
-        cd "./Without Text"
-        rename "$i" "y"
-        cd ..
-    fi
-    find . -type d -empty -delete
-    cd ../../
 done
