@@ -77,6 +77,7 @@
 # check for existing check record file, create if not present
     existingLogs=()
     for i in *.txt; do
+        if [[ "$i" != "*.txt" ]]
         existingLogs+=("$i")
     done
     if [[ ${#existingLogs[@]} == 0 ]]; then   
@@ -93,7 +94,7 @@
 
 # run process on each look variation
     if [[ "$oneLook" == *"FALSE"* ]]; then
-        if [[logRun == "y"]]; then
+        if [[$logRun == "y"]]; then
             echo
             for i in */; do
                 if [[ "$i" != *"00_"* ]]; then

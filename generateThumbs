@@ -39,7 +39,7 @@ if [[ $runOnce != "y" ]]; then
     done
 fi
 
-if [[ $runOnce != "y" ]]; then
+if [[ $runOnce == "y" ]]; then
     for i in *.mov; do 
         if [[ "$i" == *"$textFilter"* ]] && [[ "$i" == *"$textFilter2"* ]] && [[ "$i" != "*.mov" ]] && [[ "$i" != "$textFilter3" ]]; then
             open /System/Applications/QuickTime\ Player.app
