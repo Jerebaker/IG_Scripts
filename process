@@ -3,7 +3,6 @@
 scriptPath="$1"
 filePrefix="$2"
 
-touch
 echo "Processing Files for $filePrefix"
 read -p "  Do you want to re-generate thumbnails for motions? (y/n)" thumbs
 #echo "  Removing Empty Folders"
@@ -77,7 +76,7 @@ if [[ -d "./04_Worship Background/_Motions" ]]; then
     echo "  Processing Worship Backgrounds"
     cd "./04_Worship Background/_Motions"
     if [[ "$thumbs" == "y" ]]; then 
-        bash ${scriptPath}generateThumbs
+        bash ${scriptPath}generateThumbs "_" "_" "_" "y"
     fi
     bash ${scriptPath}compressMOV
     bash ${scriptPath}processFilenames "$filePrefix"
@@ -89,7 +88,7 @@ if [[ -d "./05_Ultra Wide/_Motions" ]]; then
     echo "  Processing Ultra Wides"
     cd "./05_Ultra Wide/_Motions"
     if [[ "$thumbs" == "y" ]]; then 
-        bash ${scriptPath}generateThumbs
+        bash ${scriptPath}generateThumbs "_" "_" "_" "y"
     fi
     bash ${scriptPath}compressMOV
     bash ${scriptPath}processFilenames "$filePrefix"

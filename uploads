@@ -74,21 +74,40 @@
     done
 #
 
+# check for existing check record file, create if not present
+    existingLogs=()
+    for i in *.txt; do
+        existingLogs+=("$i")
+    done
+    if [[ ${#existingLogs[@]} == 0 ]]; then   
+        checkTime=$(date '+%Y%m%d %T')
+        touch "${checkTime}.txt"
+    else
+        echo "Existing log file(s) found."
+        for i in *.txt; do
+            echo "   $i"
+        done
+        read -p "Do you want to re-check files? (y/n)" logRun
+    fi
+#
+
 # run process on each look variation
     if [[ "$oneLook" == *"FALSE"* ]]; then
-        echo
-        for i in */; do
-            if [[ "$i" != *"00_"* ]]; then
-                cd "./$i"
-                lookName="$i"
-                echo "Checking File Naming and Resolutions for ${lookName%"/"}"
-                bash ${scriptPath}checkFiles "$scriptPath"
-                cd ..
-            fi
-        done
-        echo
-        read -p "Press enter to continue or CTRL-C to cancel"
-        echo
+        if [[logRun == "y"]]; then
+            echo
+            for i in */; do
+                if [[ "$i" != *"00_"* ]]; then
+                    cd "./$i"
+                    lookName="$i"
+                    echo "Checking File Naming and Resolutions for ${lookName%"/"}"
+                    bash ${scriptPath}checkFiles "$scriptPath"
+                    cd ..
+                fi
+            done
+            echo
+            read -p "Press enter to continue or CTRL-C to cancel"
+            echo
+        fi
         for i in */; do
             if [[ "$i" != *"00_"* ]]; then
                 cd "./$i"
@@ -100,12 +119,14 @@
         done
     else
         filePrefix="$projName"
-        echo
-        echo "Checking File Naming and Resolutions for $filePrefix"
-        bash ${scriptPath}checkFiles "$scriptPath"
-        echo
-        read -p "Press enter to continue or CTRL-C to cancel"
-        echo
+        if [[logRun == "y"]]; then
+            echo
+            echo "Checking File Naming and Resolutions for $filePrefix"
+            bash ${scriptPath}checkFiles "$scriptPath"
+            echo
+            read -p "Press enter to continue or CTRL-C to cancel"
+            echo
+        fi
         bash ${scriptPath}process "$scriptPath" "$filePrefix"
     fi
 #

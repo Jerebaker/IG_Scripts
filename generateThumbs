@@ -3,6 +3,7 @@
 textFilter="$1"
 textFilter2="$2"
 textFilter3="$3"
+runOnce="$4"
 
 #quicktime madness
 get_Thumb_Time() {
@@ -18,20 +19,44 @@ EOF
     )
 }
 
-for i in *.mov; do 
-    if [[ "$i" == *"$textFilter"* ]] && [[ "$i" == *"$textFilter2"* ]] && [[ "$i" != "*.mov" ]] && [[ "$i" != "$textFilter3" ]]; then
-        open /System/Applications/QuickTime\ Player.app
-        sleep 1
-        open "$i"
-        read -p "Press enter after choosing the thumbnail frame." answer
-        get_Thumb_Time
+if [[ $runOnce != "y" ]]; then
+    for i in *.mov; do 
+        if [[ "$i" == *"$textFilter"* ]] && [[ "$i" == *"$textFilter2"* ]] && [[ "$i" != "*.mov" ]] && [[ "$i" != "$textFilter3" ]]; then
+            open /System/Applications/QuickTime\ Player.app
+            sleep 1
+            open "$i"
+            read -p "Press enter after choosing the thumbnail frame." answer
+            get_Thumb_Time
 
-        pngthumb=${i/mov}png
-        jpgthumb=${i/mov}jpg
+            pngthumb=${i/mov}png
+            jpgthumb=${i/mov}jpg
 
-        echo "      Generating Thumb for $i from time $TIME"
-        ffmpeg -loglevel quiet -y -ss $TIME -i "$i" -q:v 1 -vframes 1 "$pngthumb"
+            echo "      Generating Thumb for $i from time $TIME"
+            ffmpeg -loglevel quiet -y -ss $TIME -i "$i" -q:v 1 -vframes 1 "$pngthumb"
+            sleep .5
+            sips -s format jpeg "$pngthumb" --out "$jpgthumb" && rm "$pngthumb"
+        fi
+    done
+fi
+
+if [[ $runOnce != "y" ]]; then
+    for i in *.mov; do 
+        if [[ "$i" == *"$textFilter"* ]] && [[ "$i" == *"$textFilter2"* ]] && [[ "$i" != "*.mov" ]] && [[ "$i" != "$textFilter3" ]]; then
+            open /System/Applications/QuickTime\ Player.app
+            sleep 1
+            open "$i"
+            read -p "Press enter after choosing the thumbnail frame." answer
+            get_Thumb_Time
+        fi
+        break
+    done
+    for t in *.mov; do
+        pngthumb=${t/mov}png
+        jpgthumb=${t/mov}jpg
+
+        echo "      Generating Thumb for $t from time $TIME"
+        ffmpeg -loglevel quiet -y -ss $TIME -i "$t" -q:v 1 -vframes 1 "$pngthumb"
         sleep .5
         sips -s format jpeg "$pngthumb" --out "$jpgthumb" && rm "$pngthumb"
-    fi
-done
+    done
+fi
