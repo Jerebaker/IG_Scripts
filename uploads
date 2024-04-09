@@ -77,8 +77,9 @@
 # check for existing check record file, create if not present
     existingLogs=()
     for i in *.txt; do
-        if [[ "$i" != "*.txt" ]]
-        existingLogs+=("$i")
+        if [[ "$i" != "*.txt" ]]; then
+            existingLogs+=("$i")
+        fi
     done
     if [[ ${#existingLogs[@]} == 0 ]]; then   
         checkTime=$(date '+%Y%m%d %T')
